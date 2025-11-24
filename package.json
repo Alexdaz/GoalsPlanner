@@ -1,0 +1,71 @@
+{
+  "name": "goals-planner",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.web.json && node build-bundle.js",
+    "build:watch": "tsc --watch & tsc -p tsconfig.web.json --watch",
+    "start": "npm run build && electron .",
+    "dist": "npm run build && electron-builder",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:linux": "npm run build && electron-builder --linux"
+  },
+  "build": {
+    "appId": "net.alex.goalsplanner",
+    "productName": "Goals Planner",
+    "icon": "build/Icon.png",
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "css/**/*",
+      "js/**/*",
+      "build-bundle.js",
+      "fonts/**/*",
+      "build/Icon.png"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility",
+      "icon": "build/Icon.png"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.productivity",
+      "darkModeSupport": true
+    }
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "lit": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^20.0.0",
+    "electron": "^39.2.1",
+    "electron-builder": "^26.0.12",
+    "esbuild": "^0.19.12",
+    "typescript": "^5.0.0"
+  }
+}
