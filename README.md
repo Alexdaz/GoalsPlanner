@@ -15,6 +15,10 @@ A modern desktop application for managing your goals and objectives, built with 
 - 📆 **ICS Export**: Export your goals with dates to calendar files
 - 🗑️ **Bulk Delete**: Delete all goals at once with confirmation
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/Alexdaz/GoalsPlanner/main/assets/SSGoalsPlanner.png" />
+</p>
+
 ## 📋 Requirements
 
 - Node.js 18+
