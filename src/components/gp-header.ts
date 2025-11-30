@@ -30,6 +30,34 @@ export class AppHeader extends LitElement {
       box-sizing: border-box;
     }
 
+    :host([platform="darwin"]) header {
+      top: 28px;
+      padding-left: 80px;
+      -webkit-app-region: drag;
+    }
+
+    :host([platform="darwin"]) header button,
+    :host([platform="darwin"]) header select {
+      -webkit-app-region: no-drag;
+    }
+
+    .drag-area {
+      display: none;
+    }
+
+    :host([platform="darwin"]) .drag-area {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background-color: var(--color-primary);
+      -webkit-app-region: drag;
+      z-index: 1600;
+      box-sizing: border-box;
+    }
+
     .title {
       flex-shrink: 0;
     }
@@ -95,6 +123,18 @@ export class AppHeader extends LitElement {
   totalCount: number = 0;
   showCalendar: boolean = false;
 
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.updatePlatform();
+  }
+
+  updatePlatform(): void {
+    const platform = window.electronAPI?.platform || '';
+    if (platform === 'darwin') {
+      this.setAttribute('platform', 'darwin');
+    }
+  }
+
   toggleTheme(): void {
     const base = this.theme.includes("pink") ? "kawaii-pink"
                : this.theme.includes("lavender") ? "kawaii-lavender"
@@ -130,8 +170,10 @@ export class AppHeader extends LitElement {
   render() {
     const allDone = this.completedCount === this.totalCount && this.totalCount > 0;
     const isDark = this.theme.includes("dark");
+    const isMac = this.getAttribute('platform') === 'darwin';
 
     return html`
+      ${isMac ? html`<div class="drag-area"></div>` : ''}
       <header>
         <div class="title">My Goals 💫</div>
         <div class="controls">

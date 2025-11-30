@@ -4,11 +4,13 @@ import * as path from 'path';
 function createWindow(): void {
   const preloadPath = path.join(__dirname, 'preload.js');
 
+  const isMac = process.platform === 'darwin';
+
   const win = new BrowserWindow({
     width: 1250,
     height: 750,
     frame: false,
-    titleBarStyle: 'hidden',
+    titleBarStyle: isMac ? 'hiddenInset' : 'hidden',
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,

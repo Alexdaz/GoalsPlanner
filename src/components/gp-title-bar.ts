@@ -7,6 +7,7 @@ declare global {
       minimize: () => void;
       maximize: () => void;
       close: () => void;
+      platform?: string;
     };
   }
 }
@@ -36,6 +37,10 @@ export class TitleBar extends LitElement {
       user-select: none;
       z-index: 2000;
       box-sizing: border-box;
+    }
+
+    :host([platform="darwin"]) {
+      display: none;
     }
 
     .window-controls {
@@ -95,6 +100,7 @@ export class TitleBar extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.updatePlatform();
     this.updateTheme();
     const root = this.getRootNode() as ShadowRoot | Document;
     const appRoot = root.querySelector('app-root') as HTMLElement;
@@ -106,6 +112,13 @@ export class TitleBar extends LitElement {
         attributes: true,
         attributeFilter: ['theme']
       });
+    }
+  }
+
+  updatePlatform(): void {
+    const platform = window.electronAPI?.platform || '';
+    if (platform === 'darwin') {
+      this.setAttribute('platform', 'darwin');
     }
   }
 

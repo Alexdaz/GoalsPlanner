@@ -11,6 +11,17 @@ import { StorageService } from './services/storage.service.js';
 import { JsonService } from './services/json.service.js';
 import { ConfettiService } from './services/confetti.service.js';
 
+declare global {
+  interface Window {
+    electronAPI?: {
+      minimize: () => void;
+      maximize: () => void;
+      close: () => void;
+      platform?: string;
+    };
+  }
+}
+
 export class AppRoot extends LitElement {
   static properties = {
     cards: { type: Array },
@@ -147,6 +158,10 @@ export class AppRoot extends LitElement {
       scrollbar-width: none;
     }
 
+    :host([platform="darwin"]) main {
+      padding-top: 92px;
+    }
+
     main::-webkit-scrollbar {
       display: none;
     }
@@ -175,6 +190,7 @@ export class AppRoot extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.updatePlatform();
     this.cards = StorageService.loadCards();
     const savedTheme = StorageService.loadTheme();
     if (savedTheme) {
@@ -183,6 +199,13 @@ export class AppRoot extends LitElement {
     } else {
       this.theme = "dark";
       this.setAttribute("theme", this.theme);
+    }
+  }
+
+  updatePlatform(): void {
+    const platform = window.electronAPI?.platform || '';
+    if (platform === 'darwin') {
+      this.setAttribute('platform', 'darwin');
     }
   }
 
