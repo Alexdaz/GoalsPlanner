@@ -165,6 +165,15 @@ export class AppRoot extends LitElement {
     main::-webkit-scrollbar {
       display: none;
     }
+
+    .calendar-container {
+      margin-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .file-input-hidden {
+      display: none;
+    }
   `;
 
   cards: Card[] = [];
@@ -385,7 +394,7 @@ export class AppRoot extends LitElement {
     </main>
 
     ${this.showCalendar ? html`
-      <div style="margin-top: 1rem; padding-bottom: 1rem;">
+      <div class="calendar-container">
         <app-calendar .cards=${this.cards}></app-calendar>
       </div>
     ` : ""}
@@ -394,7 +403,7 @@ export class AppRoot extends LitElement {
       type="file" 
       id="fileInput" 
       accept="application/json" 
-      style="display:none" 
+      class="file-input-hidden"
       @change=${this.importJsonFromFile}>
 
     <gp-add-goal-modal

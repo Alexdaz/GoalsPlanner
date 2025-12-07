@@ -77,6 +77,19 @@ export class DeleteConfirmModal extends LitElement {
     :host([theme*="dark"]) .cancel-no-bg:hover {
       background: rgba(255, 255, 255, 0.1);
     }
+
+    .modal-title,
+    .modal-message {
+      margin: 0 0 1rem 0;
+      color: var(--color-text);
+    }
+
+    .modal-warning {
+      margin: 0 0 1rem 0;
+      font-size: 12px;
+      color: var(--color-text);
+      opacity: 0.7;
+    }
   `;
 
   open: boolean = false;
@@ -106,11 +119,11 @@ export class DeleteConfirmModal extends LitElement {
     return html`
       <div class="modal-overlay" @click=${this.handleCancel}>
         <div class="modal" @click=${(e: Event) => e.stopPropagation()}>
-          <h3 style="margin: 0 0 1rem 0; color: var(--color-text);">⚠️ Confirm deletion</h3>
-          <p style="margin: 0 0 1rem 0; color: var(--color-text);">
+          <h3 class="modal-title">⚠️ Confirm deletion</h3>
+          <p class="modal-message">
             ${this.message}
           </p>
-          <p style="margin: 0 0 1rem 0; font-size: 12px; color: var(--color-text); opacity: 0.7;">
+          <p class="modal-warning">
             This action cannot be undone.
           </p>
           <div class="actions">
